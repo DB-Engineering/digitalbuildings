@@ -152,11 +152,22 @@ class Findings(object):
   """Base class for validators to keep track of findings."""
 
   def __init__(self):
-    self._findings_list = []
+    self._findings_list = [] 
     self._is_changed = False
 
   # 9/17/2021 method added by Jane Dickson
   def ExportLogToTxt(self, absfilepath):
+    """Export findings to a txt file.
+
+    Receives an absolute path for the log and creates a txt file containing all findings.
+    Prints a message in the console with the result of the operation.
+
+    Args:
+      absfilepath: Absolute path for the log txt file.
+
+    Returns:
+      True if the log created successfully, False if there were errors.
+    """
     export_file = open(absfilepath, 'w')
 
     for finding in self._findings_list:
