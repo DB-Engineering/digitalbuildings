@@ -15,7 +15,6 @@
 import copy
 import operator
 from datetime import date
-from pathlib import Path
 
 MAX_RANK = 1000000000  # A big number, but not so big it breaks sorting
 MISSING_PARENT_VALIDATION_RANK = 60
