@@ -14,6 +14,8 @@
 """Library defining different types of validation errors."""
 import copy
 import operator
+from datetime import date
+from pathlib import Path
 
 MAX_RANK = 1000000000  # A big number, but not so big it breaks sorting
 MISSING_PARENT_VALIDATION_RANK = 60
@@ -152,28 +154,38 @@ class Findings(object):
   """Base class for validators to keep track of findings."""
 
   def __init__(self):
-    self._findings_list = [] 
+    self._findings_list = []
     self._is_changed = False
 
   # 9/17/2021 method added by Jane Dickson
-  def ExportLogToTxt(self, absfilepath):
+  def ExportLogToTxt(self):
     """Export findings to a txt file.
 
-    Receives an absolute path for the log and creates a txt file containing all findings.
+    Creates a txt file containing all findings in a default location: 
+      '/digitalbuildings/tools/validators/instance_validator/log/'.
     Prints a message in the console with the result of the operation.
-
-    Args:
-      absfilepath: Absolute path for the log txt file.
 
     Returns:
       True if the log created successfully, False if there were errors.
     """
-    export_file = open(absfilepath, 'w')
+    # tentative path, will change when decide where to call the method
+    # find out where to get a building name and embed it in file name
+    filename = './log/{}_log.txt'.format(str(date.today()))
 
-    for finding in self._findings_list:
-      export_file.write('{}\n'.format(finding))
+    try:
+      export_file = open(filename, 'w')
 
-    export_file.close()
+      for finding in self._findings_list:
+        export_file.write('{}\n'.format(finding))
+
+      export_file.close()
+
+      print('The log file has been successfully exported:\n{}'.format(filename))
+      return(True)
+
+    except Exception as e:
+      print('Log export error: {}'.format(e))
+      return(False)
 
   def _GetDynamicFindings(self, filter_old_warnings):
     """Override this to include additional findings not in self._findings_list.
