@@ -15,6 +15,8 @@
 import copy
 import operator
 from datetime import date
+from pathlib import Path
+
 
 MAX_RANK = 1000000000  # A big number, but not so big it breaks sorting
 MISSING_PARENT_VALIDATION_RANK = 60
@@ -169,7 +171,8 @@ class Findings(object):
     """
     # tentative path, will change when decide where to call the method
     # find out where to get a building name and embed it in file name
-    filename = './log/{}_log.txt'.format(str(date.today()))
+    Path('/log').mkdir(parents=False, exist_ok=True)
+    filename = '/log/{}_log.txt'.format(str(date.today()))
 
     try:
       export_file = open(filename, 'w')
@@ -179,12 +182,10 @@ class Findings(object):
 
       export_file.close()
 
-      print('The log file has been successfully exported:\n{}'.format(filename))
-      return(True)
+      return 'Log file has been successfully exported:\n{}'.format(filename)
 
     except Exception as e:
-      print('Log export error: {}'.format(e))
-      return(False)
+      return 'Log export error: {}'.format(e)
 
   def _GetDynamicFindings(self, filter_old_warnings):
     """Override this to include additional findings not in self._findings_list.

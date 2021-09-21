@@ -17,6 +17,7 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+from datetime import date
 
 from yamlformat.validator import entity_type_lib
 from yamlformat.validator import findings_lib
@@ -188,6 +189,26 @@ class FindingsLibTest(absltest.TestCase):
     findings = self.findings_class.GetFindings()
     self.assertLen(findings, 1)
     self.assertEqual('high', findings[0].message)
+  
+  def testExportLogToText(self):
+    findings_list = [
+        findings_lib.ValidationError(
+            'message', findings_lib.FileContext('filepath')),
+        findings_lib.ValidationWarning(
+            'message', findings_lib.FileContext('filepath')),
+        findings_lib.ValidationError(
+            'message', findings_lib.FileContext('filepath')),
+        'some string',
+        findings_lib.ValidationWarning(
+            'message', findings_lib.FileContext('filepath'))]
+    self.findings_class.AddFindings(findings_list)
+    findings = self.findings_class.GetFindings()
+
+    filename = '/log/{}_log.txt'.format(str(date.today()))
+    
+    self.assertMultilineEqual(findings.ExportLogToTxt(), 
+                              'Log file has been successfully exported:\n{}'.format(filename), 
+                              'The method has not returned a success message')
 
 
 if __name__ == '__main__':
