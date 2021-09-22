@@ -14,7 +14,7 @@
 """Library defining different types of validation errors."""
 import copy
 import operator
-from datetime import date
+from datetime import datetime
 from pathlib import Path
 
 
@@ -172,14 +172,17 @@ class Findings(object):
     # tentative path, will change when decide where to call the method
     # find out where to get a building name and embed it in file name
     Path('/log').mkdir(parents=False, exist_ok=True)
-    filename = '/log/{}_log.txt'.format(str(date.today()))
+
+    now = datetime.now().strftime('%d%m%Y_%H-%M-%S')
 
     try:
+      filename = '/log/{0}_log.txt'.format(now)
+
       export_file = open(filename, 'w')
 
       for finding in self._findings_list:
-        print(finding.file_context.filepath)
-        export_file.write('{}\n'.format(finding))
+        buildingname = finding.file_context.filepath.split('/')[-1].split('.')[0]
+        export_file.write('{0}: {1}\n'.format(buildingname, finding))
 
       export_file.close()
 
