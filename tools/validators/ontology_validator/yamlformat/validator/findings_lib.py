@@ -178,6 +178,7 @@ class Findings(object):
       export_file = open(filename, 'w')
 
       for finding in self._findings_list:
+        print(finding.file_context.filepath)
         export_file.write('{}\n'.format(finding))
 
       export_file.close()

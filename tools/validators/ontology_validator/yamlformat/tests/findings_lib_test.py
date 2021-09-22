@@ -198,17 +198,17 @@ class FindingsLibTest(absltest.TestCase):
             'message', findings_lib.FileContext('filepath')),
         findings_lib.ValidationError(
             'message', findings_lib.FileContext('filepath')),
-        'some string',
         findings_lib.ValidationWarning(
             'message', findings_lib.FileContext('filepath'))]
     self.findings_class.AddFindings(findings_list)
-    findings = self.findings_class.GetFindings()
+    self.findings_class.GetFindings()
+    test_output = self.findings_class.ExportLogToTxt()
 
     filename = '/log/{}_log.txt'.format(str(date.today()))
-    
-    self.assertMultilineEqual(findings.ExportLogToTxt(), 
-                              'Log file has been successfully exported:\n{}'.format(filename), 
-                              'The method has not returned a success message')
+
+    self.assertEqual(test_output, 
+                    'Log file has been successfully exported:\n{}'.format(filename), 
+                    'The method has not returned a success message')
 
 
 if __name__ == '__main__':
