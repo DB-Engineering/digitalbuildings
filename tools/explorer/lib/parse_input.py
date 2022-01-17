@@ -14,6 +14,7 @@
 
 """Main module for DBO explorer."""
 import ast
+import colorama
 from termcolor import colored
 from typing import List
 
@@ -21,6 +22,7 @@ from lib import model
 from lib.model import StandardField
 
 DEFAULT_MATCHED_TYPES_LIST_SIZE = 10
+colorama.init()
 
 def _InputFieldsFromUser(ontology, manual: bool = False) -> List[StandardField]:
   """Method to take in field inputs from the user.

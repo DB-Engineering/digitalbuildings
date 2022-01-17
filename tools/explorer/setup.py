@@ -23,6 +23,12 @@ setup(
     license='Apache License',
     author='Travis Welch',
     packages=find_packages(),
-    install_requires=['absl-py', 'pyfiglet', 'argparse', 'termcolor'],
+    install_requires=[
+      'absl-py',
+      'pyfiglet',
+      'argparse',
+      'termcolor',
+      'colorama'
+    ],
     python_requires='>=3.7',
 )
