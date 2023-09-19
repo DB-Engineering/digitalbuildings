@@ -9,9 +9,11 @@
       <form action = "{{ url_for('validate_building_config') }}" method = "POST" 
          enctype = "multipart/form-data">
          <input type = "file" name = "file" />
-         <input type = "text" name = "dbo_commit_hash" placeholder="Pull Request ID"/>
+         <input type = "text" name = "dbo_commit_hash" placeholder="Pull Request ID (Optional)"/>
+         <br/>
          <input type = "submit"/>
       </form>
+      <br>
       <div>
         <textarea class="scrollabletextbox" name="note">{{iv_output}}</textarea>
       </div>
